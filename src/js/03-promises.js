@@ -29,8 +29,7 @@ function createPromise(position, delay) {
       }
       promise.then(({ position, delay }) => {
         Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
-      });
-      promise.catch(({ position, delay }) => {
+      }).catch(({ position, delay }) => {
         Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       });
   }, delay);
