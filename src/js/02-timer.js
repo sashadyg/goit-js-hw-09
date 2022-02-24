@@ -7,27 +7,40 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-  onClose(selectedDates) {}
+  onClose(selectedDates) { },
+  onChange: function (selectedDates) {
+    if (selectedDates[0].getTime() <= Date.now()) {
+      window.alert("Please choose a date in the future")
+      startBtnRef.setAttribute('disabled', 'true')
+      
+    } else {
+      startBtnRef.removeAttribute('disabled')
+  }
+  }
 };
 const fp = flatpickr(inputDataRef, options)
 const startBtnRef = document.querySelector('button[data-start]')
 
-startBtnRef.addEventListener('click', updatePerSec)
+startBtnRef.addEventListener('click', startOfTimer)
 
-
+function startOfTimer(e) {
+  updatePerSec()
+}
 
 function updatePerSec() {
-    const timerId = setInterval(differentsOfTime, 1000);
-
-    
+    const timerId = setInterval(differentsOfTime, 1000);    
 }
 
 
 function differentsOfTime() {
-    const selectedDate = fp.selectedDates[0].getTime()
-    const nowDate = new Date()
-    const gap = selectedDate - nowDate.getTime()
-    return gap
+  const selectedDate = fp.selectedDates[0].getTime()
+  const nowDate = new Date()
+  const gap = selectedDate - nowDate.getTime()
+  if (gap <= 0) {
+    window.alert("Please choose a date in the future")
+  }
+    
+  return gap
 }
 
 function convertMs(ms) {
