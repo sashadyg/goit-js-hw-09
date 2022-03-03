@@ -39,10 +39,14 @@ function differentsOfTime() {
   const gap = selectedDate - nowDate.getTime()
   const convertedTime = convertMs(gap)
 
-  daysRef.textContent = convertedTime.days
+  if(gap < 0) {
+    removeInterval(timerId)
+  }else{
+    daysRef.textContent = convertedTime.days
   hoursRef.textContent = convertedTime.hours
   minRef.textContent = convertedTime.minutes
   secRef.textContent = convertedTime.seconds
+  }
 }
 
 function pad(value) {
